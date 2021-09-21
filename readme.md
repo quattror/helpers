@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/Quattror/helpers.svg?branch=master)](https://travis-ci.org/Quattror/helpers)
+<!-- [![Build Status](https://travis-ci.org/Quattror/helpers.svg?branch=master)](https://travis-ci.org/Quattror/helpers)
 [![Coverage Status](https://coveralls.io/repos/github/Quattror/helpers/badge.svg)](https://coveralls.io/github/Quattror/helpers)
 [![Total Downloads](https://poser.pugx.org/motamonteiro/helpers/downloads)](https://packagist.org/packages/motamonteiro/helpers)
 [![Latest Stable Version](https://poser.pugx.org/motamonteiro/helpers/v/stable)](https://packagist.org/packages/motamonteiro/helpers)
-[![License](https://poser.pugx.org/motamonteiro/helpers/license)](https://packagist.org/packages/motamonteiro/helpers)
+[![License](https://poser.pugx.org/motamonteiro/helpers/license)](https://packagist.org/packages/motamonteiro/helpers) -->
 
 # helpers
 
