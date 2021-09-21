@@ -1,6 +1,6 @@
 <?php
 
-namespace MotaMonteiro\Helpers\Traits;
+namespace Quattror\Helpers\Traits;
 
 
 trait DataHelper

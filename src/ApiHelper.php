@@ -1,6 +1,6 @@
 <?php
 
-namespace MotaMonteiro\Helpers;
+namespace Quattror\Helpers;
 
 
 class ApiHelper

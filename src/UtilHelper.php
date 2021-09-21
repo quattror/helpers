@@ -1,8 +1,8 @@
 <?php
-namespace MotaMonteiro\Helpers;
+namespace Quattror\Helpers;
 
 class UtilHelper
 {
-    use \MotaMonteiro\Helpers\Traits\UtilHelper;
+    use \Quattror\Helpers\Traits\UtilHelper;
 
 }

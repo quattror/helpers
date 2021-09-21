@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$api = new \MotaMonteiro\Helpers\ApiHelper('https://jsonplaceholder.typicode.com');
+$api = new \Quattror\Helpers\ApiHelper('https://jsonplaceholder.typicode.com');
 
 $data = ['login' => 'test_user', 'mail' => 'test@test.com', 'password' => 'secret'];
 

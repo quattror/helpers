@@ -1,6 +1,6 @@
 <?php
 
-use MotaMonteiro\Helpers\Traits\StringHelper;
+use Quattror\Helpers\Traits\StringHelper;
 use PHPUnit\Framework\TestCase;
 
 class FormatarIeTest extends TestCase

@@ -1,11 +1,11 @@
 {
-  "name": "motamonteiro/helpers",
+  "name": "quattror/helpers",
   "description": "Funções comuns que podem ser usadas em qualquer projeto PHP 7.",
   "license": "MIT",
   "authors": [
     {
-      "name": "Alexandre Mota Monteiro",
-      "email": "motamonteiro@gmail.com"
+      "name": "Quattror",
+      "email": "ti@quattror.com.br"
     }
   ],
   "require": {},
@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "MotaMonteiro\\Helpers\\":"src/"
+      "Quattror\\Helpers\\":"src/"
     }
   }
 }

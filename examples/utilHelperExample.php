@@ -1,6 +1,6 @@
 <?php
 
-use MotaMonteiro\Helpers\UtilHelper;
+use Quattror\Helpers\UtilHelper;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

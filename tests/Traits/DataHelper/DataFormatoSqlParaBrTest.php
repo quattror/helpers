@@ -1,6 +1,6 @@
 <?php
 
-use MotaMonteiro\Helpers\Traits\DataHelper;
+use Quattror\Helpers\Traits\DataHelper;
 use PHPUnit\Framework\TestCase;
 
 class DataFormatoSqlParaBrTest extends TestCase

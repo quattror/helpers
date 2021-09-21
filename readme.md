@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/motamonteiro/helpers.svg?branch=master)](https://travis-ci.org/motamonteiro/helpers)
-[![Coverage Status](https://coveralls.io/repos/github/motamonteiro/helpers/badge.svg)](https://coveralls.io/github/motamonteiro/helpers)
+[![Build Status](https://travis-ci.org/Quattror/helpers.svg?branch=master)](https://travis-ci.org/Quattror/helpers)
+[![Coverage Status](https://coveralls.io/repos/github/Quattror/helpers/badge.svg)](https://coveralls.io/github/Quattror/helpers)
 [![Total Downloads](https://poser.pugx.org/motamonteiro/helpers/downloads)](https://packagist.org/packages/motamonteiro/helpers)
 [![Latest Stable Version](https://poser.pugx.org/motamonteiro/helpers/v/stable)](https://packagist.org/packages/motamonteiro/helpers)
 [![License](https://poser.pugx.org/motamonteiro/helpers/license)](https://packagist.org/packages/motamonteiro/helpers)
@@ -11,14 +11,14 @@ O pacote helpers disponibiliza funcionalidades comuns que podem ser usadas em qu
 ## Instalação
 
 ```sh
-$ composer require motamonteiro/helpers
+$ composer require quattror/helpers
 
 ```
 
 ## Utilização com  `traits`
 
 ```php
-use MotaMonteiro\Helpers\Traits\UtilHelper;
+use Quattror\Helpers\Traits\UtilHelper;
  
 class MyClass
 {
@@ -45,7 +45,7 @@ class MyClass
 ## Utilização com `classes`
 
 ```php
-use MotaMonteiro\Helpers\UtilHelper;
+use Quattror\Helpers\UtilHelper;
  
 class MyClass
 {
@@ -76,7 +76,7 @@ Exemplo de saída:
 PHPUnit 5.7.21 by Sebastian Bergmann and contributors.
 
 Runtime:       PHP 7.1.6 with Xdebug 2.5.4
-Configuration: /Users/alexandre/Documents/github/motamonteiro/helpers/phpunit.xml
+Configuration: /Users/alexandre/Documents/github/Quattror/helpers/phpunit.xml
 
 ..........................                                        26 / 26 (100%)
 
@@ -90,7 +90,7 @@ Generating code coverage report in Clover XML format ... done
 
 ## Package
 
-https://packagist.org/packages/motamonteiro/helpers
+https://packagist.org/packages/Quattror/helpers
 
 ## Licença
 
