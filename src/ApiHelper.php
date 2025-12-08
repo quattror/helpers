@@ -142,6 +142,19 @@ class ApiHelper
                 }
 
                 break;
+            case "PATCH":
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
+            
+                if ($this->existsFile($data)) {
+                    $this->setCurlFile($data, $curl, $headerAuth);
+                } else {
+                    curl_setopt($curl, CURLOPT_HTTPHEADER, array($headerAuth, self::CONTENT_TYPE_JSON));
+                    if ($data) {
+                        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                    }
+                }
+                
+                break;
             case "DELETE":
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
                 curl_setopt($curl, CURLOPT_HTTPHEADER, array($headerAuth, self::CONTENT_TYPE_JSON));
