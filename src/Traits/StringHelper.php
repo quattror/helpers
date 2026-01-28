@@ -5,6 +5,15 @@ namespace Quattror\Helpers\Traits;
 
 trait StringHelper
 {
+    public $regexCaracteresNaoPermitidos    = '/[^A-Z\d\.\/-]/i';
+    public $regexCnpjSemDigitoVerificador   = '/^([A-Z\d]){12}$/';
+    public $regexCnpj                       = '/^([A-Z\d]){12}(\d){2}$/';
+    public $tamanhoCnpjSemDigitoVerificador = 12;
+    public $cnpjZerado                      = '00000000000000';
+    // ord('0') em PHP é 48, equivalente ao charCodeAt(0) do JS
+    public $valorBase                       = 48;
+    public $pesosDigitoVerificador          = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
     /**
      * Retornar somente os números de uma determinada string
      *
@@ -59,44 +68,40 @@ trait StringHelper
     }
 
     /**
-     * Validar se o cnpj é válido ou não.
+     * Validar se o cnpj é válido ou não. Alterações feitas pela Receita Federal válidas a partir de Julho de 2026 já estão valendo
      *
      * @param string $cnpj
      * @return bool
      */
     public function validarCnpj($cnpj)
     {
-        $cnpj = $this->filtrarSomenteNumeros($cnpj);
+        $cnpjSemMascara = $this->removerPontuacaoCnpj($cnpj);
 
         // Valida tamanho e caracteres repetidos 00000000000000, 11111111111111, ..., 99999999999999
-        if ((strlen($cnpj) != 14) || (preg_match('/(\d)\1{13}/', $cnpj))) {
+        if ((strlen($cnpjSemMascara) != 14) || (preg_match('/(\d)\1{13}/', $cnpj))) {
             return false;
         }
 
-        //Primeiro dígito verificador
-        $soma = 0;
-        $j = 5;
-        for ($i = 0; $i < 12; $i++) {
-            $soma += $cnpj[$i] * $j;
-            $j = ($j == 2) ? 9 : $j - 1;
-        }
-
-        $resto = $soma % 11;
-        if ($cnpj[12] != ($resto < 2 ? 0 : 11 - $resto)) {
+        // Verifica se há caracteres não permitidos
+        if (preg_match($this->regexCaracteresNaoPermitidos, $cnpjSemMascara)) {
             return false;
         }
 
-        //Segundo dígito verificador
-        $soma = 0;
-        $j = 6;
-        for ($i = 0; $i < 13; $i++) {
-            $soma += $cnpj[$i] * $j;
-            $j = ($j == 2) ? 9 : $j - 1;
+        // Verifica formato e se não é tudo zerado
+        if (preg_match($this->regexCnpj, $cnpjSemMascara) && $cnpjSemMascara !== $this->cnpjZerado) {
+            // Separa a base (12 chars) e o DV informado (2 chars)
+            $dvInformado    = substr($cnpjSemMascara, $this->tamanhoCnpjSemDigitoVerificador);
+            $baseCnpj       = substr($cnpjSemMascara, 0, $this->tamanhoCnpjSemDigitoVerificador);
+
+            try {
+                $dvCalculado = $this->calculaDigitoVerificadorCnpj($baseCnpj);
+                return $dvInformado === $dvCalculado;
+            } catch (\Exception $e) {
+                return false;
+            }
         }
 
-        $resto = $soma % 11;
-
-        return $cnpj[13] == ($resto < 2 ? 0 : 11 - $resto);
+        return false;
     }
 
     /**
@@ -399,5 +404,63 @@ trait StringHelper
                 ,"/(Ç)/")
             , explode(" ","a A e E i I o O u U n N c C")
             , $string);
+    }
+    
+    /**
+     * Remove a pontuação de um cnpj passado como parâmetro (., -, /).
+     *
+     * @param $string
+     * @return mixed
+     */
+    public function removerPontuacaoCnpj($string)
+    {
+        return preg_replace('/[\.\/-]/', "", $string);
+    }
+
+    /**
+     * Realiza o cálculo matemático dos dígitos verificadores (Alfanumérico)
+     * @param $string
+     */
+    public function calculaDigitoVerificadorCnpj(string $cnpj)
+    {
+        // Verifica caracteres inválidos
+        if (preg_match($this->regexCaracteresNaoPermitidos, $cnpj)) {
+            return false;
+        }
+
+        $cnpjSemMascara = $this->removerPontuacaoCnpj($cnpj);
+
+        // Verifica se a base tem o tamanho correto (12 chars alfanuméricos)
+        // Nota: O código original verifica se é diferente dos 12 primeiros zeros do CNPJ zerado
+        $zerosBase = substr($this->cnpjZerado, 0, $this->tamanhoCnpjSemDigitoVerificador);
+
+        if (preg_match($this->regexCnpjSemDigitoVerificador, $cnpjSemMascara) && $cnpjSemMascara !== $zerosBase) {
+            $somatorioDV1 = 0;
+            $somatorioDV2 = 0;
+
+            for ($i = 0; $i < $this->tamanhoCnpjSemDigitoVerificador; $i++) {
+                // Em PHP, acessamos o caractere da string como array: $string[$i]
+                // ord() pega o valor ASCII. Subtraímos 48 (valor de '0')
+                $asciiDigito = ord($cnpjSemMascara[$i]) - $this->valorBase;
+
+                $somatorioDV1 += $asciiDigito * $this->pesosDigitoVerificador[$i + 1];
+                $somatorioDV2 += $asciiDigito * $this->pesosDigitoVerificador[$i];
+            }
+
+            // Cálculo do Primeiro Dígito
+            $resto1 = $somatorioDV1 % 11;
+            $dv1    = $resto1 < 2 ? 0 : 11 - $resto1;
+
+            // Adiciona o primeiro DV ao cálculo do segundo somatório
+            $somatorioDV2 += $dv1 * $this->pesosDigitoVerificador[$this->tamanhoCnpjSemDigitoVerificador];
+
+            // Cálculo do Segundo Dígito
+            $resto2 = $somatorioDV2 % 11;
+            $dv2    = $resto2 < 2 ? 0 : 11 - $resto2;
+
+            return $dv1 . $dv2;
+        }
+
+        return false;
     }
 }
