@@ -68,7 +68,7 @@ trait StringHelper
     }
 
     /**
-     * Validar se o cnpj é válido ou não. Alterações feitas pela Receita Federal válidas a partir de Julho de 2026 já estão valendo
+     * Validar se o cnpj é válido ou não. Alterações feitas pela Receita Federal válidas a partir de Julho de 2026 já estão valendo (Instrução Normativa RFB nº 2.229 de 15 de outubro de 2024)
      *
      * @param string $cnpj
      * @return bool
